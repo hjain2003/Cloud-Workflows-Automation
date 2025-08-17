@@ -1,0 +1,1 @@
+A curated collection of Azure Logic Apps automations for common cloud management tasks. Each folder contains a separate Logic App workflow with scripts, snapshots, JSON definitions, and instructions for deployment. Designed to help teams automate monitoring, cleanup, reporting, and self-healing operations in Azure
