@@ -1,0 +1,27 @@
+param (
+    [string]$SubscriptionId = "**********************8"
+)
+
+# Authenticate
+Connect-AzAccount -Identity | Out-Null
+Set-AzContext -SubscriptionId $SubscriptionId | Out-Null
+
+$report = @()
+
+# Get all managed disks
+$disks = Get-AzDisk
+foreach ($disk in $disks) {
+    $attached = if ($disk.ManagedBy) { "Attached" } else { "Unattached" }
+
+    $report += [PSCustomObject]@{
+        DiskName      = $disk.Name
+        ResourceGroup = $disk.ResourceGroupName
+        Location      = $disk.Location
+        SizeGB        = $disk.DiskSizeGB
+        Status        = $attached
+        TimeStamp     = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+    }
+}
+
+# Output JSON
+$report | ConvertTo-Json -Depth 5
